@@ -107,11 +107,7 @@ bitcoin_gen = Generator(
     n = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141,
 )
 
-def generate_key_from_string(string):
-    key = int.from_bytes(bytes(string, 'utf-8'), 'big')
-    return key
-
-def generate_random_key(start=1):
+def generate_random_key(start):
     key = random.randint(start, bitcoin_gen.n)
     return key
 
@@ -119,14 +115,14 @@ def address(secret_key):
     public_key_point = secret_key * G
     return public_key_point.address()
 
-def generate_wallet_from_string(string):
-    key = generate_key_from_string(string)
+def generate_wallet_from(secret):
+    key = secret
+    if isinstance(secret, str):
+        key = int.from_bytes(bytes(secret, 'utf-8'), 'big')
     addr = address(key)
     return key, addr
 
-def generate_wallet():
-    key = generate_random_key()
+def generate_wallet(start=1):
+    key = generate_random_key(start)
     addr = address(key)
     return key, addr
-
-print(generate_wallet())
