@@ -3,7 +3,6 @@ import requests
 
 api_providers = [
     'Blockchain.info',
-    'Bitgo.com',
     'Blockchair.com',
     'Bitaps.com',
     'Bitcoinblockexplorers.com/v1',
@@ -21,9 +20,6 @@ def balance(addr, provider):
             return int(response.json()[addr]['final_balance'])
         except:
             return False
-    elif provider == 'Bitgo.com':
-        #https://www.bitgo.com/api/v1/
-        return False
     elif provider == 'Blockchair.com':
         #https://api.blockchair.com/bitcoin/
         return False
@@ -67,5 +63,5 @@ if __name__ == '__main__':
     test_addr_active = '3K5wTxuoQWcUZmjpSB2FVg33ETTFrb6DQX'
     test_addr_null = '1N7iX8v8Wh4Poi9owrNQTre8sPEU2KNHzh'
 
-    print(balance(test_addr_active, 'Harari.blocksmurfer.io'))
-    print(balance(test_addr_null, 'Harari.blocksmurfer.io'))
+    print(balance(test_addr_active, 'Bitgo.com'))
+    print(balance(test_addr_null, 'Bitgo.com'))
