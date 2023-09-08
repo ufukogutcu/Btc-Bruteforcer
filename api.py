@@ -29,7 +29,7 @@ def balance(addr, provider):
         except:
             return False
     elif provider == 'Explorer.btc.com':
-        #https://blockstream.info/api/ #multiple
+        #https://chain.api.btc.com/v3/ #multiple
         response = requests.get(f'https://chain.api.btc.com/v3/address/{addr}')
         try:
             return response.json()['data']['balance']
@@ -37,7 +37,14 @@ def balance(addr, provider):
             return False
     elif provider == 'Blockstream.info':
         #https://blockstream.info/api/
-        return False
+        response = requests.get(f'https://blockstream.info/api/address/{addr}')
+        try:
+            # CAN NOT GET THE BALANCE!
+            if response.json()['chain_stats']['tx_count'] > 0:
+                return 1
+            return 0
+        except:
+            return False
     elif provider == 'Mempool.space':
         #https://mempool.space/api/
         return False
@@ -66,5 +73,5 @@ if __name__ == '__main__':
     test_addr_active = '3K5wTxuoQWcUZmjpSB2FVg33ETTFrb6DQX'
     test_addr_null = '1N7iX8v8Wh4Poi9owrNQTre8sPEU2KNHzh'
 
-    print(balance(test_addr_active, 'Explorer.btc.com'))
-    print(balance(test_addr_null, 'Explorer.btc.com'))
+    print(balance(test_addr_active, 'Blockstream.info'))
+    print(balance(test_addr_null, 'Blockstream.info'))
