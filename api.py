@@ -4,7 +4,6 @@ import requests
 api_providers = [
     'Blockchain.info',
     'Blockchair.com',
-    'Bitaps.com',
     'Bitcoinblockexplorers.com/v1',
     'Bitcoinblockexplorers.com/v2',
     'Blockstream.info',
@@ -30,9 +29,6 @@ def balance(addr, provider):
             return int(data[addr])
         except:
             return False
-    elif provider == 'Bitaps.com':
-        #https://api.bitaps.com/btc/v1/
-        return False
     elif provider == 'Bitcoinblockexplorers.com/v1':
         #https://bitcoinblockexplorers.com/api/v1/
         return False
@@ -70,5 +66,5 @@ if __name__ == '__main__':
     test_addr_active = '3K5wTxuoQWcUZmjpSB2FVg33ETTFrb6DQX'
     test_addr_null = '1N7iX8v8Wh4Poi9owrNQTre8sPEU2KNHzh'
 
-    print(balance(test_addr_active, 'Blockchair.com'))
-    print(balance(test_addr_null, 'Blockchair.com'))
+    print(balance(test_addr_active, 'Bitaps.com'))
+    print(balance(test_addr_null, 'Bitaps.com'))
