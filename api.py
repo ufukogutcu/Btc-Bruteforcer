@@ -47,7 +47,14 @@ def balance(addr, provider):
             return False
     elif provider == 'Mempool.space':
         #https://mempool.space/api/
-        return False
+        response = requests.get(f'https://mempool.space/api/address/{addr}')
+        try:
+            # CAN NOT GET THE BALANCE!
+            if response.json()['chain_stats']['tx_count'] > 0:
+                return 1
+            return 0
+        except:
+            return False
     elif provider == 'Harari.blocksmurfer.io':
         #https://harari.blocksmurfer.io/api/v1/btc/
         response = requests.get(f'https://harari.blocksmurfer.io/api/v1/btc/address_balance/{addr}')
@@ -73,5 +80,5 @@ if __name__ == '__main__':
     test_addr_active = '3K5wTxuoQWcUZmjpSB2FVg33ETTFrb6DQX'
     test_addr_null = '1N7iX8v8Wh4Poi9owrNQTre8sPEU2KNHzh'
 
-    print(balance(test_addr_active, 'Blockstream.info'))
-    print(balance(test_addr_null, 'Blockstream.info'))
+    print(balance(test_addr_active, 'Mempool.space'))
+    print(balance(test_addr_null, 'Mempool.space'))
