@@ -29,12 +29,6 @@ def balance(addr, provider):
             return int(data[addr])
         except:
             return False
-    elif provider == 'Bitcoinblockexplorers.com/v1':
-        #https://bitcoinblockexplorers.com/api/v1/
-        return False
-    elif provider == 'Bitcoinblockexplorers.com/v2':
-        #https://bitcoinblockexplorers.com/api/v2/
-        return False
     elif provider == 'Blockstream.info':
         #https://blockstream.info/api/
         return False
