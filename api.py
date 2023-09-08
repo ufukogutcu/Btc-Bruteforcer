@@ -4,8 +4,7 @@ import requests
 api_providers = [
     'Blockchain.info',
     'Blockchair.com',
-    'Bitcoinblockexplorers.com/v1',
-    'Bitcoinblockexplorers.com/v2',
+    'Explorer.btc.com',
     'Blockstream.info',
     'Mempool.space',
     'Harari.blocksmurfer.io'
@@ -27,6 +26,13 @@ def balance(addr, provider):
             if not data:
                 return 0
             return int(data[addr])
+        except:
+            return False
+    elif provider == 'Explorer.btc.com':
+        #https://blockstream.info/api/ #multiple
+        response = requests.get(f'https://chain.api.btc.com/v3/address/{addr}')
+        try:
+            return response.json()['data']['balance']
         except:
             return False
     elif provider == 'Blockstream.info':
@@ -60,5 +66,5 @@ if __name__ == '__main__':
     test_addr_active = '3K5wTxuoQWcUZmjpSB2FVg33ETTFrb6DQX'
     test_addr_null = '1N7iX8v8Wh4Poi9owrNQTre8sPEU2KNHzh'
 
-    print(balance(test_addr_active, 'Bitaps.com'))
-    print(balance(test_addr_null, 'Bitaps.com'))
+    print(balance(test_addr_active, 'Explorer.btc.com'))
+    print(balance(test_addr_null, 'Explorer.btc.com'))
