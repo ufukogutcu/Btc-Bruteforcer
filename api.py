@@ -18,7 +18,7 @@ def balance(addr, provider):
         #https://blockchain.info/ #multiple
         response = requests.get(f'https://blockchain.info/balance?active={addr}')
         try:
-            return response.json()[addr]['final_balance']
+            return int(response.json()[addr]['final_balance'])
         except:
             return False
     elif provider == 'Bitgo.com':
@@ -44,7 +44,12 @@ def balance(addr, provider):
         return False
     elif provider == 'Harari.blocksmurfer.io':
         #https://harari.blocksmurfer.io/api/v1/btc/
-        return False
+        response = requests.get(f'https://harari.blocksmurfer.io/api/v1/btc/address_balance/{addr}')
+        try:
+            # Harari currently not working
+            return False
+        except:
+            return False
         
     return False
 
@@ -62,5 +67,5 @@ if __name__ == '__main__':
     test_addr_active = '3K5wTxuoQWcUZmjpSB2FVg33ETTFrb6DQX'
     test_addr_null = '1N7iX8v8Wh4Poi9owrNQTre8sPEU2KNHzh'
 
-    print(balance(test_addr_active, 'Blockchain.info'))
-    print(balance(test_addr_null, 'Blockchain.info'))
+    print(balance(test_addr_active, 'Harari.blocksmurfer.io'))
+    print(balance(test_addr_null, 'Harari.blocksmurfer.io'))
