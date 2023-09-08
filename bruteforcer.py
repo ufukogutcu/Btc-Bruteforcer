@@ -14,12 +14,18 @@ def run(start=1):
         save(key, addr)
 
 threads_running = False
-cooldown = 0.5
+cooldown = 0.1
 
 def loop(start=1):
-    while threads_running:
-        run(start)
-        time.sleep(cooldown)
+    global threads_running
+    try:
+        while threads_running:
+            run(start)
+            time.sleep(cooldown)
+    except Exception as e:
+        print(e)
+        print('Error occured! Stopping Bruteforcer threads...')
+        threads_running = False
 
 def terminal():
     global threads_running
@@ -43,6 +49,12 @@ def terminal():
     while True:
         command = input('>')
         print('\n'*space)
+
+        if command == 's':
+            if threads_running:
+                command = 'stop'
+            else:
+                command = 'start'
 
         #HELP
         if command in ['help','h']:
@@ -82,6 +94,8 @@ Cooldown: {str(cooldown)}s
             threads_running = False
             for thread in threads:
                 thread.join()
+            threads_number = len(threads)
+            threads = [threading.Thread(target=loop) for i in range(threads_number)]
             print('Bruteforcer stopped!')
 
         #THREADS
