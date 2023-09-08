@@ -21,8 +21,15 @@ def balance(addr, provider):
         except:
             return False
     elif provider == 'Blockchair.com':
-        #https://api.blockchair.com/bitcoin/
-        return False
+        #https://api.blockchair.com/bitcoin/ #multiple
+        response = requests.get(f'https://api.blockchair.com/bitcoin/addresses/balances?addresses={addr}')
+        try:
+            data = response.json()['data']
+            if not data:
+                return 0
+            return int(data[addr])
+        except:
+            return False
     elif provider == 'Bitaps.com':
         #https://api.bitaps.com/btc/v1/
         return False
@@ -63,5 +70,5 @@ if __name__ == '__main__':
     test_addr_active = '3K5wTxuoQWcUZmjpSB2FVg33ETTFrb6DQX'
     test_addr_null = '1N7iX8v8Wh4Poi9owrNQTre8sPEU2KNHzh'
 
-    print(balance(test_addr_active, 'Bitgo.com'))
-    print(balance(test_addr_null, 'Bitgo.com'))
+    print(balance(test_addr_active, 'Blockchair.com'))
+    print(balance(test_addr_null, 'Blockchair.com'))
