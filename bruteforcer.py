@@ -5,7 +5,8 @@ import threading
 import time
 
 def save(key, addr):
-    print(f'Saved: {key} {addr}')
+    with open("found.txt", "a") as file:
+        file.write(f'Private key(int): {key}, Address: {addr}\n')
 
 def run(start=1):
     key, addr = generate_wallet(start)
@@ -23,7 +24,7 @@ def loop(start=1):
 def terminal():
     global threads_running
     global cooldown
-    space = 5
+    space = 4
     threads = [threading.Thread(target=loop)]
     help = '''Available commands:
 - "start": Start the Bruteforcer
@@ -58,7 +59,7 @@ ALMOST!
         elif command in ['info','i']:
             print(f'''Running: {str(threads_running)}
 Number of threads: {str(len(threads))}
-Cooldown: {str(cooldown)} s
+Cooldown: {str(cooldown)}s
         ''')
 
         #START
@@ -118,7 +119,7 @@ Cooldown: {str(cooldown)} s
         #EXIT
         elif command in ['exit','quit','q','e']:
             if threads_running:
-                print('Stopping Bruteforcer before exiting...')
+                print('Stopping Bruteforcer threads before exiting...')
                 threads_running = False
                 for thread in threads:
                     thread.join()
